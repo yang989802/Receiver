@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lock.receiver">
+    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission><!--添加msg权限-->
+    <uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
+    <uses-permission android:name="android.permission.READ_SMS"></uses-permission>
+    <!-- GPS权限-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 拨打电话权限-->
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+
+        >
+
+        <activity android:name=".MainActivity"
+            android:clearTaskOnLaunch="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".LockActivity"
+
+            >
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+            </intent-filter>
+        </activity>
+        <activity android:name=".SetPassword"
+            android:launchMode="singleInstance">
+    </activity>
+        <!-- 短信收发-->
+        <receiver android:name="com.lock.receiver.SMSBroadcastReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".MyAdmin" >
+                     <meta-data android:name="android.app.device_admin"
+                       android:resource="@xml/my_admin"/>
+                     <intent-filter >
+                          <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
+                       </intent-filter>
+                    </receiver>
+
+        <!-- 注册自定义静态广播接收器 -->
+        <!-- 注册系统静态广播接收器 -->
+        <!-- home-->
+
+        <service android:name=".MusicService" />
+        <service android:name=".GPSService" />
+        <service android:name=".reStartService" />
+    </application>
+
+</manifest>
